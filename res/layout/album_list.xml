@@ -19,7 +19,7 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="@string/article_list_empty"
+      android:text="@string/albums_empty"
       />
   </RelativeLayout>
 

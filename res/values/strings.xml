@@ -7,5 +7,7 @@
     <string name="welcome_home">Welcome Home!</string>
     <string name="album">This is an album!</string>
     <string name="photo">This is an photo!</string>
+    
+    <string name="albums_empty">No albums found!</string>
 
 </resources>

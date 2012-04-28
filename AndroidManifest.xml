@@ -10,13 +10,22 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name=".HomeActivity"
+            android:name=".AlbumListActivity"
             android:label="@string/app_name" >
             <intent-filter>
+              <!-- This lets the OS know to OPEN this activity on app launch!
+                   -->
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AlbumDetailActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".PhotoActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 
