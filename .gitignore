@@ -1,0 +1,44 @@
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated GUI files
+R.java
+gen/
+
+# Database files
+*.db
+
+# Eclipse stuff
+#.project
+#.classpath
+.metadata
+local.properties
+.settings/
+.loadpath
+*.pydevproject
+bin/**
+bin
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# CDT-specific
+.cproject
+
+# Maven
+target
+*/target/*
+
+# Mac OS
+.DS_Store
+
