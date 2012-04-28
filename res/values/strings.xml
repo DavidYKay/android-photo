@@ -9,5 +9,6 @@
     <string name="photo">This is an photo!</string>
     
     <string name="albums_empty">No albums found!</string>
+    <string name="albums_add">Add Album</string>
 
 </resources>

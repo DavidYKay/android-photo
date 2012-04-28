@@ -20,12 +20,19 @@ public class DataStore {
   public static final String FILE_NAME = "photoData.dat";
   
   public static DataStore gDataStore;
+  
   public static final DataStore getInstance() {
     if (gDataStore == null) {
       gDataStore = new DataStore();
     }
     return gDataStore;
   }
+  
+  public DataStore() {
+    restoreAlbumsToDisk();
+  }
+  
+  private ArrayList<Album> mAlbums;
 
   /** 
    * Uses the SD Card
@@ -37,7 +44,7 @@ public class DataStore {
     return f;
   }
 
-  public static void saveAlbums(Collection<Album> albumList){
+  private void saveAlbums(Collection<Album> albumList){
     try {
       FileOutputStream fos = new FileOutputStream(getFilePath());
       ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -51,7 +58,7 @@ public class DataStore {
     }
   }
 
-  public static List<Album> loadAlbums() {
+  private ArrayList<Album> loadAlbums() {
     ArrayList<Album> albums = new ArrayList<Album>();
     try {
       FileInputStream in = new FileInputStream(getFilePath());
@@ -78,5 +85,30 @@ public class DataStore {
       e.printStackTrace();
     }
     return albums;
+  }
+  
+  /*
+   * PUBLIC METHODS
+   * 
+   */
+  
+  public void restoreAlbumsToDisk() {    
+    mAlbums = loadAlbums();
+  }
+  
+  public void saveAlbumsToDisk() {
+    saveAlbums(mAlbums);
+  }
+  
+  public List<Album>getAlbums() {
+    return mAlbums;
+  }
+  
+  public void addAlbum(Album album) {
+    mAlbums.add(album);
+  }
+  
+  public void removeAlbum(Album album) {
+    mAlbums.remove(album);
   }
 }
