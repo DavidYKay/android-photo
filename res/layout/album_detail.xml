@@ -6,24 +6,40 @@
   
   <TextView android:id="@+id/album_title"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="0px"
+    android:layout_weight="10"
     android:gravity="center"
     android:text="@string/album_title"
     />
-
-  <ListView android:id="@android:id/list"
+  
+  <RelativeLayout 
     android:layout_width="fill_parent"
     android:layout_height="0px"
     android:layout_weight="80"
-    android:drawSelectorOnTop="false"
-    />
-  
+    android:orientation="vertical" 
+    >
 
-  <TextView android:id="@android:id/empty"
+    <ListView android:id="@android:id/list"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:drawSelectorOnTop="false"
+      />
+
+    <TextView android:id="@android:id/empty"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:gravity="center"
+      android:text="@string/album_no_photos"
+      />
+
+  </RelativeLayout>
+  <Button
+    android:id="@+id/add_button"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/album_no_photos"
+    android:layout_height="0px"
+    android:layout_weight="20"
+    android:text="@string/photos_add"
     />
-
 </LinearLayout>

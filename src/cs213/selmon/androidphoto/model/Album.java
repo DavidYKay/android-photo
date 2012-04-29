@@ -32,5 +32,9 @@ public class Album implements Serializable {
   public Photo getPhoto(int index) {
     return mPhotos.get(index);
   }
+  
+  public void addPhoto(Photo photo) {
+    mPhotos.add(photo);
+  }
 
 }

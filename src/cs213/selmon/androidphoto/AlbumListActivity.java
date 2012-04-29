@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import cs213.selmon.androidphoto.model.Album;
 import cs213.selmon.androidphoto.util.DataStore;
+import cs213.selmon.androidphoto.util.PhotoScanner;
 
 public class AlbumListActivity extends ListActivity {
 
@@ -29,6 +30,8 @@ public class AlbumListActivity extends ListActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    scanDefaultPhotos();
+    
     mDataStore = ((PhotoApplication) this.getApplication()).getDataStore();
     mDataStore.restoreStateFromDisk();
 
@@ -42,12 +45,19 @@ public class AlbumListActivity extends ListActivity {
       }
     });
 
-    setListAdapter(new AlbumListAdapter(
-        mDataStore.getAlbums()
-        ));
+    refresh();
   }
   
-  
+  private void scanDefaultPhotos() {
+    // TODO Don't run this more than once
+    
+    // Bah
+    PhotoScanner scanner = new PhotoScanner(this);
+    scanner.scanDefaultPhotos();
+    
+    
+  }
+
   @Override
   protected void onStop() {
     mDataStore.saveStateToDisk();    
@@ -76,9 +86,6 @@ public class AlbumListActivity extends ListActivity {
 
     mDataStore.addAlbum(newAlbum);
 
-    setListAdapter(new AlbumListAdapter(
-        mDataStore.getAlbums()
-        ));
   }
 
   private void showNewAlbumDialog() {
@@ -99,6 +106,12 @@ public class AlbumListActivity extends ListActivity {
       }
     })
     .show();
+  }
+  
+  private void refresh() {
+    setListAdapter(new AlbumListAdapter(
+        mDataStore.getAlbums()
+        ));
   }
 
   private class AlbumListAdapter implements ListAdapter {
