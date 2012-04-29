@@ -32,19 +32,16 @@ public class AlbumListActivity extends ListActivity {
     setContentView(R.layout.album_list);
 
     Button addButton = (Button) findViewById(R.id.add_button);
-    addButton.setOnClickListener( new View.OnClickListener() {
-      
+    addButton.setOnClickListener( new View.OnClickListener() {      
       @Override
       public void onClick(View v) {
         showNewAlbumDialog();
-
-
       }
     });
-    
-     setListAdapter(new AlbumListAdapter(
-         mDataStore.getAlbums()
-     ));
+
+    setListAdapter(new AlbumListAdapter(
+        mDataStore.getAlbums()
+        ));
   }
 
   private void addNewAlbum(String name) {
@@ -62,13 +59,13 @@ public class AlbumListActivity extends ListActivity {
     final EditText textEntryView = new EditText(this);
     AlertDialog.Builder alert = new AlertDialog.Builder(this);
     alert.setTitle("New Album")
-        .setView(textEntryView)
-        .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            /* User clicked OK so do some stuff */
-            addNewAlbum(textEntryView.getText().toString());
-          }
-        })
+    .setView(textEntryView)
+    .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        /* User clicked OK so do some stuff */
+        addNewAlbum(textEntryView.getText().toString());
+      }
+    })
     .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
         /* User clicked cancel so do some stuff */
@@ -87,13 +84,12 @@ public class AlbumListActivity extends ListActivity {
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-      // TODO Auto-generated method stub
+      // TODO Implement this later
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-      // TODO Auto-generated method stub
-      
+      // TODO Implement this later      
     }
 
     @Override
@@ -125,7 +121,7 @@ public class AlbumListActivity extends ListActivity {
       TextView text = (TextView) row.findViewById(R.id.text);
       Album album = mAlbums.get(position);
       text.setText(album.getName());
-      
+
       return(row);
     }
 
