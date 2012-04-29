@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <resources>  
-  <array name="album_context_choices">  
+  <array name="album_list_context_choices">  
     <item>Rename</item>  
     <item>Delete</item>  
   </array>
+  
+  <array name="photo_list_context_choices">  
+    <item>Delete</item>  
+  </array>
+
 </resources>

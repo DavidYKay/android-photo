@@ -9,7 +9,11 @@ import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,6 +38,8 @@ public class AlbumDetailActivity extends Activity {
   private GridView mGridView;
 
   private PhotoHelper mPhotoHelper;
+  
+  private PhotoListAdapter mAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,8 @@ public class AlbumDetailActivity extends Activity {
       }
     });
 
+    registerForContextMenu(mGridView);  
+
     refresh();
   }
   
@@ -91,13 +99,54 @@ public class AlbumDetailActivity extends Activity {
     }
   }
   
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v,
+                                  ContextMenuInfo menuInfo) {
+    if (v == mGridView) {
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+      menu.setHeaderTitle("");
+      String[] menuItems = getResources().getStringArray(R.array.photo_list_context_choices);
+      for (int i = 0; i<menuItems.length; i++) {
+        menu.add(Menu.NONE, i, i, menuItems[i]);
+      }
+    }
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+    int menuItemIndex = item.getItemId();
+    
+    String[] menuItems = getResources().getStringArray(R.array.photo_list_context_choices);
+    String menuItemName = menuItems[menuItemIndex];
+
+    Photo photo = (Photo) mAdapter.getItem(info.position);    
+
+    if (menuItemName.equals("Delete")) {
+      deletePhoto(photo);
+    }
+
+    // Handle which option was chosen
+
+    //TextView text = (TextView)findViewById(R.id.footer);
+    //text.setText(String.format("Selected %s for item %s", menuItemName, listItemName));
+
+    return true;
+  }
+  
+  private void deletePhoto(Photo photo) {
+    mAlbum.deletePhoto(photo);
+    refresh();
+  }
+
   private void addNewPhoto(String fileUri) {
     mAlbum.addPhoto(new Photo(fileUri));
     refresh();
   }
 
   private void refresh() {
-    mGridView.setAdapter(new PhotoListAdapter(mAlbum.getPhotos()));
+    mAdapter = new PhotoListAdapter(mAlbum.getPhotos());
+    mGridView.setAdapter(mAdapter);
   }
   
   private class PhotoListAdapter extends BaseAdapter {

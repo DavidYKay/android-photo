@@ -93,7 +93,7 @@ public class AlbumListActivity extends ListActivity {
     if (v == getListView()) {
       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
       menu.setHeaderTitle("");
-      String[] menuItems = getResources().getStringArray(R.array.album_context_choices);
+      String[] menuItems = getResources().getStringArray(R.array.album_list_context_choices);
       for (int i = 0; i<menuItems.length; i++) {
         menu.add(Menu.NONE, i, i, menuItems[i]);
       }
@@ -105,7 +105,7 @@ public class AlbumListActivity extends ListActivity {
     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
     int menuItemIndex = item.getItemId();
     
-    String[] menuItems = getResources().getStringArray(R.array.album_context_choices);
+    String[] menuItems = getResources().getStringArray(R.array.album_list_context_choices);
     String menuItemName = menuItems[menuItemIndex];
 
     Album album = (Album) getListAdapter().getItem(info.position);
