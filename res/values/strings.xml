@@ -10,5 +10,8 @@
     
     <string name="albums_empty">No albums found!</string>
     <string name="albums_add">Add Album</string>
+    
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_ok">OK</string>
 
 </resources>

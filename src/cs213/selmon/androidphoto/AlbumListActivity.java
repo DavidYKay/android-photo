@@ -2,13 +2,16 @@ package cs213.selmon.androidphoto;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import cs213.selmon.androidphoto.model.Album;
@@ -33,18 +36,45 @@ public class AlbumListActivity extends ListActivity {
       
       @Override
       public void onClick(View v) {
-        Album newAlbum = new Album("New Name Here");
-        mDataStore.addAlbum(newAlbum);
+        showNewAlbumDialog();
 
-        setListAdapter(new AlbumListAdapter(
-            mDataStore.getAlbums()
-            ));
+
       }
     });
     
      setListAdapter(new AlbumListAdapter(
          mDataStore.getAlbums()
      ));
+  }
+
+  private void addNewAlbum(String name) {
+    Album newAlbum = new Album(name);
+
+    mDataStore.addAlbum(newAlbum);
+
+    setListAdapter(new AlbumListAdapter(
+        mDataStore.getAlbums()
+        ));
+  }
+
+  private void showNewAlbumDialog() {
+
+    final EditText textEntryView = new EditText(this);
+    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    alert.setTitle("New Album")
+        .setView(textEntryView)
+        .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            /* User clicked OK so do some stuff */
+            addNewAlbum(textEntryView.getText().toString());
+          }
+        })
+    .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        /* User clicked cancel so do some stuff */
+      }
+    })
+    .show();
   }
 
   private class AlbumListAdapter implements ListAdapter {
