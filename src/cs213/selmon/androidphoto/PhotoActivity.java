@@ -19,7 +19,8 @@ public class PhotoActivity extends ListActivity {
   
   @Override
   protected void onStop() {
-    mDataStore.saveStateToDisk();    
+    mDataStore.saveStateToDisk();   
+    //Recompile!
     
     super.onStop();
   }

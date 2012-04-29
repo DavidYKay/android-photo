@@ -1,7 +1,13 @@
 package cs213.selmon.androidphoto.model;
 
-public class Tag {
+import java.io.Serializable;
 
+public class Tag implements Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7575947964891100304L;
   private String mName;
   private TagType mType;
   
