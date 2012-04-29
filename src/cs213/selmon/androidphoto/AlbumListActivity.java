@@ -55,7 +55,6 @@ public class AlbumListActivity extends ListActivity {
     PhotoScanner scanner = new PhotoScanner(this);
     scanner.scanDefaultPhotos();
     
-    
   }
 
   @Override

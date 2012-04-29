@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import cs213.selmon.androidphoto.model.Album;
@@ -127,10 +128,14 @@ public class AlbumDetailActivity extends ListActivity {
     public View getView(int position, View convertView, ViewGroup parent) {
       LayoutInflater inflater = getLayoutInflater();
       View row = inflater.inflate(R.layout.photo_row, null);
-      TextView text = (TextView) row.findViewById(R.id.text);
 
       Photo photo = mPhotos.get(position);
+      
+      TextView text = (TextView) row.findViewById(R.id.text);
       text.setText(photo.getPath());
+      
+      ImageView image = (ImageView) row.findViewById(R.id.image);
+      image.setImageURI(Uri.parse(photo.getPath()));
 
       return(row);
     }
