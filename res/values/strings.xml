@@ -8,8 +8,10 @@
     <string name="album">This is an album!</string>
     <string name="photo">This is an photo!</string>
     
-    <string name="albums_empty">No albums found!</string>
     <string name="album_no_photos">No photos found!</string>
+    <string name="album_title">Album Title</string>
+
+    <string name="albums_empty">No albums found!</string>
     <string name="albums_add">Add Album</string>
     
     <string name="alert_dialog_cancel">Cancel</string>

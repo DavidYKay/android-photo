@@ -19,14 +19,13 @@ public class DataStore {
 
   public static final String FILE_NAME = "photoData.dat";
   
-  public static DataStore gDataStore;
-  
-  public static final DataStore getInstance() {
-    if (gDataStore == null) {
-      gDataStore = new DataStore();
-    }
-    return gDataStore;
-  }
+  //public static DataStore gDataStore;
+  //public static final DataStore getInstance() {
+  //  if (gDataStore == null) {
+  //    gDataStore = new DataStore();
+  //  }
+  //  return gDataStore;
+  //}
   
   public DataStore() {
     restoreAlbumsToDisk();

@@ -29,7 +29,7 @@ public class AlbumListActivity extends ListActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mDataStore = DataStore.getInstance();
+    mDataStore = ((PhotoApplication) this.getApplication()).getDataStore();
 
     setContentView(R.layout.album_list);
 
@@ -53,6 +53,9 @@ public class AlbumListActivity extends ListActivity {
     
     AlbumListAdapter listAdapter = (AlbumListAdapter) getListAdapter();
     Album album = (Album) listAdapter.getItem(position);
+    
+    PhotoApplication application = ((PhotoApplication) this.getApplication());
+    application.setCurrentAlbum(album);
 
     // Load new activity
     
