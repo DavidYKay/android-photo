@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import cs213.selmon.androidphoto.model.Album;
 import cs213.selmon.androidphoto.util.DataStore;
@@ -42,6 +44,20 @@ public class AlbumListActivity extends ListActivity {
     setListAdapter(new AlbumListAdapter(
         mDataStore.getAlbums()
         ));
+  }
+  
+
+  @Override
+  protected void onListItemClick(ListView l, View v, int position, long id) {
+    super.onListItemClick(l, v, position, id);
+    
+    AlbumListAdapter listAdapter = (AlbumListAdapter) getListAdapter();
+    Album album = (Album) listAdapter.getItem(position);
+
+    // Load new activity
+    
+    Intent intent = new Intent(this, AlbumDetailActivity.class);
+    startActivity(intent);
   }
 
   private void addNewAlbum(String name) {
