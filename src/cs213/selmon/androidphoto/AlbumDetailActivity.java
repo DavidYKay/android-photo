@@ -2,7 +2,7 @@ package cs213.selmon.androidphoto;
 
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.net.Uri;
@@ -11,20 +11,25 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import cs213.selmon.androidphoto.model.Album;
 import cs213.selmon.androidphoto.model.Photo;
 import cs213.selmon.androidphoto.util.DataStore;
 
-public class AlbumDetailActivity extends ListActivity {
+public class AlbumDetailActivity extends Activity {
         
   private static final int MEDIA_IMAGE_REQUEST_CODE = 203948; 
   
   private DataStore mDataStore;
   private Album mAlbum;
+  private GridView mGridView;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,13 @@ public class AlbumDetailActivity extends ListActivity {
     
     mDataStore = ((PhotoApplication) this.getApplication()).getDataStore();
     mAlbum = ((PhotoApplication) this.getApplication()).getCurrentAlbum();
+
+    mGridView = (GridView) findViewById(R.id.gridview);
+    mGridView.setOnItemClickListener(new OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        Toast.makeText(AlbumDetailActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+      }
+    });
 
     TextView albumTitle = (TextView) findViewById(R.id.album_title);
     albumTitle.setText("Album: " +  mAlbum.getName());
@@ -79,12 +91,10 @@ public class AlbumDetailActivity extends ListActivity {
   }
 
   private void refresh() {
-    setListAdapter(new PhotoListAdapter(
-        mAlbum.getPhotos()
-        ));
+    mGridView.setAdapter(new PhotoListAdapter(mAlbum.getPhotos()));
   }
   
-  private class PhotoListAdapter implements ListAdapter {
+  private class PhotoListAdapter extends BaseAdapter {
 
     private List<Photo> mPhotos;
 
@@ -131,8 +141,8 @@ public class AlbumDetailActivity extends ListActivity {
 
       Photo photo = mPhotos.get(position);
       
-      TextView text = (TextView) row.findViewById(R.id.text);
-      text.setText(photo.getPath());
+      //TextView text = (TextView) row.findViewById(R.id.text);
+      //text.setText(photo.getPath());
       
       ImageView image = (ImageView) row.findViewById(R.id.image);
       image.setImageURI(Uri.parse(photo.getPath()));

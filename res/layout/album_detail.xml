@@ -12,29 +12,19 @@
     android:text="@string/album_title"
     />
   
-  <RelativeLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="0px"
-    android:layout_weight="80"
-    android:orientation="vertical" 
-    >
-
-    <ListView android:id="@android:id/list"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:drawSelectorOnTop="false"
-      />
-
-    <TextView android:id="@android:id/empty"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
+  <GridView 
+      android:id="@+id/gridview"
+      android:layout_width="fill_parent" 
+      android:layout_height="0px"
+      android:layout_weight="80"
+      android:columnWidth="90dp"
+      android:numColumns="auto_fit"
+      android:verticalSpacing="10dp"
+      android:horizontalSpacing="10dp"
+      android:stretchMode="columnWidth"
       android:gravity="center"
-      android:text="@string/album_no_photos"
       />
-
-  </RelativeLayout>
+  
   <Button
     android:id="@+id/add_button"
     android:layout_width="fill_parent"
