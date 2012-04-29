@@ -55,7 +55,15 @@ public class AlbumDetailActivity extends Activity {
     mGridView = (GridView) findViewById(R.id.gridview);
     mGridView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Toast.makeText(AlbumDetailActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(AlbumDetailActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+    
+        Photo photo = (Photo) mAdapter.getItem(position);
+
+        PhotoApplication application = ((PhotoApplication) AlbumDetailActivity.this.getApplication());
+        application.setCurrentPhoto(photo);
+
+        Intent intent = new Intent(AlbumDetailActivity.this, PhotoActivity.class);
+        startActivity(intent);
       }
     });
 

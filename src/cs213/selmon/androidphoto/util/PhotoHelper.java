@@ -42,8 +42,12 @@ public class PhotoHelper {
   //    InputStream fis = new InputStream(f);
   //    return decodeInputStream(fis);
   //  }
-
+  
   public Bitmap decodeUri(Uri uri) throws FileNotFoundException{
+    return decodeUri(uri, IMAGE_MAX_SIZE);
+  }
+
+  public Bitmap decodeUri(Uri uri, int maxImageSize) throws FileNotFoundException{
     InputStream fis = mContentResolver.openInputStream(uri);
     Bitmap b = null;
     BitmapFactory.Options o = null;
@@ -61,8 +65,8 @@ public class PhotoHelper {
 
     try {
       int scale = 1;
-      if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-        scale = (int)Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+      if (o.outHeight > maxImageSize || o.outWidth > maxImageSize) {
+        scale = (int)Math.pow(2, (int) Math.round(Math.log(maxImageSize / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
       }
 
       //Decode with inSampleSize
@@ -100,8 +104,8 @@ public class PhotoHelper {
 
   //  try {
   //    int scale = 1;
-  //    if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-  //      scale = (int)Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+  //    if (o.outHeight > maxImageSize || o.outWidth > maxImageSize) {
+  //      scale = (int)Math.pow(2, (int) Math.round(Math.log(maxImageSize / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
   //    }
 
   //    //Decode with inSampleSize
