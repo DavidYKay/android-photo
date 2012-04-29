@@ -1,5 +1,6 @@
 package cs213.selmon.androidphoto;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import android.app.Activity;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import cs213.selmon.androidphoto.model.Album;
 import cs213.selmon.androidphoto.model.Photo;
 import cs213.selmon.androidphoto.util.DataStore;
+import cs213.selmon.androidphoto.util.PhotoHelper;
 
 public class AlbumDetailActivity extends Activity {
         
@@ -31,11 +33,15 @@ public class AlbumDetailActivity extends Activity {
   private Album mAlbum;
   private GridView mGridView;
 
+  private PhotoHelper mPhotoHelper;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState); 
 
     setContentView(R.layout.album_detail);
+    
+    mPhotoHelper = new PhotoHelper(this);
     
     mDataStore = ((PhotoApplication) this.getApplication()).getDataStore();
     mAlbum = ((PhotoApplication) this.getApplication()).getCurrentAlbum();
@@ -136,18 +142,26 @@ public class AlbumDetailActivity extends Activity {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      LayoutInflater inflater = getLayoutInflater();
-      View row = inflater.inflate(R.layout.photo_row, null);
+      
+      if (convertView == null) {
+      
+        LayoutInflater inflater = getLayoutInflater();
+        convertView = inflater.inflate(R.layout.photo_row, null);
+      }
 
       Photo photo = mPhotos.get(position);
       
-      //TextView text = (TextView) row.findViewById(R.id.text);
-      //text.setText(photo.getPath());
+      ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
       
-      ImageView image = (ImageView) row.findViewById(R.id.image);
-      image.setImageURI(Uri.parse(photo.getPath()));
+      imageView.setImageURI(Uri.parse(photo.getPath()));
+      //imageView.setImageBitmap(mPhotoHelper.decodeImageAtPath(photo.getPath()));
+      try {
+        imageView.setImageBitmap(mPhotoHelper.decodeUri(Uri.parse(photo.getPath())));
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
 
-      return(row);
+      return(convertView);
     }
 
     @Override
