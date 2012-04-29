@@ -107,7 +107,7 @@ public class DataStore {
     mAlbums.add(album);
   }
   
-  public void removeAlbum(Album album) {
+  public void deleteAlbum(Album album) {
     mAlbums.remove(album);
   }
 }

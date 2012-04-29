@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<resources>  
+  <array name="album_context_choices">  
+    <item>Rename</item>  
+    <item>Delete</item>  
+  </array>
+</resources>

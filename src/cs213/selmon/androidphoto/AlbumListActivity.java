@@ -8,9 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -44,6 +49,7 @@ public class AlbumListActivity extends ListActivity {
         showNewAlbumDialog();
       }
     });
+    registerForContextMenu(getListView());
 
     refresh();
   }
@@ -51,7 +57,6 @@ public class AlbumListActivity extends ListActivity {
   private void scanDefaultPhotos() {
     // TODO Don't run this more than once
     
-    // Bah
     PhotoScanner scanner = new PhotoScanner(this);
     scanner.scanDefaultPhotos();
     
@@ -63,6 +68,8 @@ public class AlbumListActivity extends ListActivity {
     
     super.onStop();
   }
+  
+  
 
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -80,11 +87,74 @@ public class AlbumListActivity extends ListActivity {
     startActivity(intent);
   }
 
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v,
+                                  ContextMenuInfo menuInfo) {
+    if (v == getListView()) {
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+      menu.setHeaderTitle("");
+      String[] menuItems = getResources().getStringArray(R.array.album_context_choices);
+      for (int i = 0; i<menuItems.length; i++) {
+        menu.add(Menu.NONE, i, i, menuItems[i]);
+      }
+    }
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+    int menuItemIndex = item.getItemId();
+    
+    String[] menuItems = getResources().getStringArray(R.array.album_context_choices);
+    String menuItemName = menuItems[menuItemIndex];
+
+    Album album = (Album) getListAdapter().getItem(info.position);
+    String listItemName = album.getName();
+
+    if (menuItemName.equals("Rename")) {
+      showRenameDialogForAlbum(album);
+    } else if (menuItemName.equals("Delete")) {
+      deleteAlbum(album);
+    }
+
+    // Handle which option was chosen
+
+    //TextView text = (TextView)findViewById(R.id.footer);
+    //text.setText(String.format("Selected %s for item %s", menuItemName, listItemName));
+
+    return true;
+  }
+  
+  private void showRenameDialogForAlbum(final Album album) {
+    final EditText textEntryView = new EditText(this);
+    textEntryView.setText(album.getName());
+    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    alert.setTitle("Rename Album")
+    .setView(textEntryView)
+    .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        /* User clicked OK so do some stuff */
+        album.setName(textEntryView.getText().toString());
+      }
+    })
+    .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        /* User clicked cancel so do some stuff */
+      }
+    })
+    .show();
+
+  }
+  
+  private void deleteAlbum(Album album) {
+    mDataStore.deleteAlbum(album);
+    refresh();
+  }
+
   private void addNewAlbum(String name) {
     Album newAlbum = new Album(name);
-
     mDataStore.addAlbum(newAlbum);
-
+    refresh();
   }
 
   private void showNewAlbumDialog() {
