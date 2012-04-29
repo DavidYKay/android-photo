@@ -28,7 +28,7 @@ public class DataStore {
   //}
   
   public DataStore() {
-    restoreAlbumsToDisk();
+    restoreStateFromDisk();
   }
   
   private ArrayList<Album> mAlbums;
@@ -91,11 +91,11 @@ public class DataStore {
    * 
    */
   
-  public void restoreAlbumsToDisk() {    
+  public void restoreStateFromDisk() {    
     mAlbums = loadAlbums();
   }
   
-  public void saveAlbumsToDisk() {
+  public void saveStateToDisk() {
     saveAlbums(mAlbums);
   }
   

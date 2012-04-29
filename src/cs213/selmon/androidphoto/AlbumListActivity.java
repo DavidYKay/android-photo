@@ -30,6 +30,7 @@ public class AlbumListActivity extends ListActivity {
     super.onCreate(savedInstanceState);
 
     mDataStore = ((PhotoApplication) this.getApplication()).getDataStore();
+    mDataStore.restoreStateFromDisk();
 
     setContentView(R.layout.album_list);
 
@@ -46,6 +47,13 @@ public class AlbumListActivity extends ListActivity {
         ));
   }
   
+  
+  @Override
+  protected void onStop() {
+    mDataStore.saveStateToDisk();    
+    
+    super.onStop();
+  }
 
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {

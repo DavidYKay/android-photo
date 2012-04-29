@@ -23,7 +23,13 @@ public class AlbumDetailActivity extends ListActivity {
     TextView albumTitle = (TextView) findViewById(R.id.album_title);
     albumTitle.setText(mAlbum.getName());
 
-
+  }
+  
+  @Override
+  protected void onStop() {
+    mDataStore.saveStateToDisk();    
+    
+    super.onStop();
   }
 
 }
